@@ -1,4 +1,9 @@
 #include "Crud.h"
+#include "Dlancamento.h"
+#include "Filme.h"
+#include "Acao.h"
+#include "Comedia.h"
+#include "Romance.h"
 #include <string>
 #include <iostream>
 using namespace std;
