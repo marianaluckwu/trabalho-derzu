@@ -1,6 +1,6 @@
 #pragma once
 #include "AnoL.h"
-#include <string.h>
+#include <string>
 #include <iostream>
 using namespace std;
 
