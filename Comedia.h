@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include <iostream>
 #include "Filme.h"
@@ -8,24 +7,24 @@ using namespace std;
 
 class Comedia : public Filme {
 private:
-    string estiloHumor;
+    string tipoHumor;
 
 public:
-    Comedia(string n, string a, string estilo)
+    Comedia(string n, string a, string tipo)
         : Filme(n, a) {
-        estiloHumor = estilo;
+        tipoHumor = tipo;
     }
 
-    string getEstiloHumor() {
-        return estiloHumor;
+    string getTipoHumor() {
+        return tipoHumor;
     }
 
-    void setEstiloHumor(string estilo) {
-        estiloHumor = estilo;
+    void setTipoHumor(string tipo) {
+        tipoHumor = tipo;
     }
 
     void exibirInformacoes() override {
         Filme::exibirInformacoes();
-        cout << "Estilo de humor: " << estiloHumor << endl;
+        cout << "Tipo de humor: " << tipoHumor << endl;
     }
 };

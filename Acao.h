@@ -7,24 +7,29 @@ using namespace std;
 
 class Acao : public Filme {
 private:
-    string nivelAcao;
+    bool violento;
 
 public:
-    Acao(string n, string a, string nivel)
+    Acao(string n, string a, bool v)
         : Filme(n, a) {
-        nivelAcao = nivel;
+        violento = v;
     }
 
-    string getNivelAcao() {
-        return nivelAcao;
+    bool getViolento() {
+        return violento;
     }
 
-    void setNivelAcao(string nivel) {
-        nivelAcao = nivel;
+    void setViolento(bool v) {
+        violento = v;
     }
 
     void exibirInformacoes() override {
-        Filme::exibirInformacoes();
-        cout << "Nivel de acao: " << nivelAcao << endl;
+    Filme::exibirInformacoes();
+
+    if (violento) {
+        cout << "Violento: Sim" << endl;
+    } else {
+        cout << "Violento: Nao" << endl;
     }
+}
 };
