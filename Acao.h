@@ -2,34 +2,31 @@
 #include <string>
 #include <iostream>
 #include "Filme.h"
-
+#include "AnoL.h"
 using namespace std;
 
 class Acao : public Filme {
 private:
-    bool violento;
+    string nivelAcao;
 
 public:
-    Acao(string n, string a, bool v)
-        : Filme(n, a) {
-        violento = v;
+    Acao(string nivel, string n, string a, string c, AnoL l )
+        : Filme(n, a, c, l) {
+        nivelAcao = nivel;
     }
 
-    bool getViolento() {
-        return violento;
+    string getNivelAcao() {
+        return nivelAcao;
     }
-
-    void setViolento(bool v) {
-        violento = v;
+    string getGenero() override{
+    return "Acao";
+    }
+    void setNivelAcao(string nivel) {
+        nivelAcao = nivel;
     }
 
     void exibirInformacoes() override {
-    Filme::exibirInformacoes();
-
-    if (violento) {
-        cout << "Violento: Sim" << endl;
-    } else {
-        cout << "Violento: Nao" << endl;
+        Filme::exibirInformacoes();
+        cout << "Nivel de acao: " << nivelAcao << endl;
     }
-}
 };

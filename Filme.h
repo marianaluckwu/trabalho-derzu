@@ -25,6 +25,18 @@ class Filme {
         nacionalidade = c;
         lancamento = l;
       }
+     virtual string getGenero(){
+        return "Filme";
+      }
+
+     virtual void exibirInformacoes(){
+        cout << "Nome: " << nome << endl;
+        cout << "Avaliacao: " << avaliacao << endl;
+        cout << "Nacionalidade: " << nacionalidade << endl;
+       cout << "Ano de lancamento: " << lancamento.getAno() << endl;
+      }
+
+     virtual ~Filme(){}
       
       string getNome(){
         return nome;}
@@ -50,4 +62,5 @@ class Filme {
       void setAno(AnoL l){
         lancamento = l;
     }
+
 };

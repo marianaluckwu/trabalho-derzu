@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <limits>
 #include "Filme.h"
 #include "AnoL.h"
 #include "Comedia.h"
@@ -11,7 +12,7 @@ using namespace std;
 
 class Crud{
     private:
-    Filme *filmes;
+    Filme **filmes;
     int qtd;
 
     public:
@@ -20,56 +21,91 @@ class Crud{
         qtd = 0;
     }
 
-    void Inserir(string n, string a, string c, AnoL l){
-        Filme *novo = new Filme[qtd + 1];
+    void InserirComedia(string n, string a, string c, AnoL l, string estilo){
+        Filme **novo = new Filme*[qtd + 1];
+
         for(int i=0; i<qtd; i++){
             novo[i] = filmes[i];
         }
-        novo[qtd] = Filme(n, a, c, l);
+
+        novo[qtd] = new Comedia(estilo, n, a, c, l);
+
         delete[] filmes;
         filmes = novo;
         qtd++;
     }
 
-    void ListarTodos(){
-        if(qtd == 0){
-        cout << "Nenhum filme cadastrado." << endl;
-        }
+    void InserirAcao(string n, string a, string c, AnoL l, string nivel){
+        Filme **novo = new Filme*[qtd + 1];
+
         for(int i=0; i<qtd; i++){
-            cout << "Índice: " << i << endl;
-            cout << "Nome: " << filmes[i].getNome() << endl;
-            cout << "Nacionalidade: " << filmes[i].getNacionalidade() << endl;
-            cout << "Avaliação: " << filmes[i].getAvaliacao() << endl;
-            cout << "Avaliação: " << filmes[i].getAvaliacao() << endl;
-            cout << endl;
+            novo[i] = filmes[i];
         }
+
+        novo[qtd] = new Acao(nivel, n, a, c, l);
+
+        delete[] filmes;
+        filmes = novo;
+        qtd++;
     }
 
+    void InserirRomance(string n, string a, string c, AnoL l, bool final){
+        Filme **novo = new Filme*[qtd + 1];
+
+        for(int i=0; i<qtd; i++){
+            novo[i] = filmes[i];
+        }
+
+        novo[qtd] = new Romance(final, n, a, c, l);
+
+        delete[] filmes;
+        filmes = novo;
+        qtd++;
+    }
+
+   void ListarTodos(){
+    if(qtd == 0){
+        cout << "Nenhum filme cadastrado" << endl;
+        return;
+    }
+
+    for(int i=0; i<qtd; i++){
+        cout << "Índice: " << i << endl;
+        cout << "Nome: " << filmes[i]->getNome() << endl;
+        cout << endl;
+    }
+}
+
     int Pesquisar(string nome){
-        int i;
         int count = 0;
         int ind = -1;
 
-        for(i=0; i<qtd; i++){
-            if(filmes[i].getNome().find(nome) == 0){
+        for(int i=0; i<qtd; i++){
+            if(filmes[i]->getNome().find(nome) == 0){
                 cout << "Índice: " << i << endl;
-                cout << "Nome: " << filmes[i].getNome() << endl;
-                cout << "Avaliação: " << filmes[i].getAvaliacao() << endl;
+                filmes[i]->exibirInformacoes();
+                cout << "Gênero: " << filmes[i]->getGenero() << endl;
                 cout << endl;
+
                 count++;
                 ind = i;
             }
         }
+
         if(count == 0){
             return -1;
         }
+
         if(count == 1){
             return ind;
         }
-        cout << "Digite o índice do filme desejado: ";
+
+        cout << "Digite o índice do filme desejado: " << endl;
         cin >> ind;
-        for(i=0; i<qtd; i++){
-            if(i == ind && filmes[i].getNome().find(nome) == 0){
+        cin.ignore();
+
+        for(int i=0; i<qtd; i++){
+            if(i == ind && filmes[i]->getNome().find(nome) == 0){
                 return ind;
             }
         }
@@ -81,23 +117,23 @@ class Crud{
         int i = Pesquisar(nome);
 
         if(i != -1){
-            cout << filmes[i].getNome() << endl;
-            cout << filmes[i].getNacionalidade() << endl;
-            cout << filmes[i].getAvaliacao() << endl;
-            cout << filmes[i].getAno() << endl;
-         }
+            filmes[i]->exibirInformacoes();
+            cout << "Gênero: " << filmes[i]->getGenero() << endl;
+        }
         else{
             cout << "Filme não encontrado" << endl;
         }
     }
 
-    void Alterar(string nome, string novoNome, string novaNacio, string novaAvaliacao){
+    void Alterar(string nome, string novoNome, string novaNacio,
+                 string novaAvaliacao, AnoL novoAno){
         int i = Pesquisar(nome);
 
         if(i != -1){
-            filmes[i].setNome(novoNome);
-            filmes[i].setNome(novaNacio);
-            filmes[i].setAvaliacao(novaAvaliacao);
+            filmes[i]->setNome(novoNome);
+            filmes[i]->setNacionalidade(novaNacio);
+            filmes[i]->setAvaliacao(novaAvaliacao);
+            filmes[i]->setAno(novoAno);
         }
         else{
             cout << "Filme não encontrado" << endl;
@@ -108,17 +144,22 @@ class Crud{
         int ind = Pesquisar(nome);
 
         if(ind != -1){
-            Filme *novo = new Filme[qtd - 1];
+            delete filmes[ind];
 
-            for(int i=0, j=0; i<qtd; i++){
-                if(i != ind){
-                    novo[j] = filmes[i];
-                    j++;
+            Filme **novo = nullptr;
+
+            if(qtd > 1){
+                novo = new Filme*[qtd - 1];
+
+                for(int i=0, j=0; i<qtd; i++){
+                    if(i != ind){
+                        novo[j] = filmes[i];
+                        j++;
+                    }
                 }
             }
 
             delete[] filmes;
-
             filmes = novo;
             qtd--;
         }
@@ -127,21 +168,43 @@ class Crud{
         }
     }
 
-    void ExibirRelatorio(string nome){
-        int i = Pesquisar(nome);
+    void ExibirRelatorio(){
+    int comedia = 0;
+    int romance = 0;
+    int acao = 0;
 
-        if(i != -1){
-            cout << "Relatório do filme" << endl;
-            cout << "Nome: " << filmes[i].getNome() << endl;
-            cout << "Avaliação: " << filmes[i].getAvaliacao() << endl;
-            cout << "Quantidade de filmes cadastrados: " << qtd << endl;
+    for(int i=0; i<qtd; i++){
+        cout << "Relatorio do filme" << endl;
+        cout << "Nome: " << filmes[i]->getNome() << endl;
+        cout << "Avaliacao: " << filmes[i]->getAvaliacao() << endl;
+        cout << "Nacionalidade: " << filmes[i]->getNacionalidade() << endl;
+        cout << "Ano de lancamento: " << filmes[i]->getAno().getAno() << endl;
+        cout << "Genero: " << filmes[i]->getGenero() << endl;
+        cout << endl;
+
+        if(filmes[i]->getGenero() == "Comedia"){
+            comedia++;
         }
-        else{
-            cout << "Filme não encontrado" << endl;
+        else if(filmes[i]->getGenero() == "Romance"){
+            romance++;
+        }
+        else if(filmes[i]->getGenero() == "Acao"){
+            acao++;
         }
     }
 
+    cout << "Resumo do relatorio" << endl;
+    cout << "Total de filmes cadastrados: " << qtd << endl;
+    cout << "Total de filmes de comedia: " << comedia << endl;
+    cout << "Total de filmes de romance: " << romance << endl;
+    cout << "Total de filmes de acao: " << acao << endl;
+   } 
+
     ~Crud(){
+        for(int i=0; i<qtd; i++){
+            delete filmes[i];
+        }
+
         delete[] filmes;
     }
 };

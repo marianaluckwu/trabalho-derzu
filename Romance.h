@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include "Filme.h"
-
+#include "AnoL.h"
 using namespace std;
 
 class Romance : public Filme {
@@ -10,13 +10,16 @@ private:
     bool finalFeliz;
 
 public:
-    Romance(string n, string a, bool final)
-        : Filme(n, a) {
-        finalFeliz = final;
+    Romance( bool final, string n, string a, string c, AnoL l)
+        : Filme(n, a, c, l) {
+         finalfeliz = final;
     }
 
     bool getFinalFeliz() {
         return finalFeliz;
+    }
+    string getGenero() override{
+    return "Romance";
     }
 
     void setFinalFeliz(bool final) {

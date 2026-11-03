@@ -2,29 +2,34 @@
 #include <string>
 #include <iostream>
 #include "Filme.h"
+#include "AnoL.h"
 
 using namespace std;
 
 class Comedia : public Filme {
 private:
-    string tipoHumor;
+    string estiloHumor;
 
 public:
-    Comedia(string n, string a, string tipo)
-        : Filme(n, a) {
-        tipoHumor = tipo;
+    Comedia(string estilo, string n, string a, string c, AnoL l)
+        : Filme(n, a, c, l) {
+        estiloHumor = estilo;
     }
 
-    string getTipoHumor() {
-        return tipoHumor;
+    string getEstiloHumor() {
+        return estiloHumor;
     }
 
-    void setTipoHumor(string tipo) {
-        tipoHumor = tipo;
+    void setEstiloHumor(string estilo) {
+        estiloHumor = estilo;
     }
+
+    string getGenero() override{
+    return "Comedia";
+    }   
 
     void exibirInformacoes() override {
         Filme::exibirInformacoes();
-        cout << "Tipo de humor: " << tipoHumor << endl;
+        cout << "Estilo de humor: " << estiloHumor << endl;
     }
 };
