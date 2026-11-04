@@ -72,7 +72,6 @@ int main(){
                         cout << "O filme tem final feliz? (1-Sim / 0-Nao): ";
                         cin >> final;
                         cin.ignore();
-
                         crud.InserirRomance(n, a, c, lancamento, final);
                         break;
 
@@ -93,23 +92,11 @@ int main(){
                 crud.ExibirUm(nome);
                 break;
 
-            case 4:{
-                int novoAno;
-
-                cout << "Digite o nome do filme que deseja alterar: ";
-                getline(cin, nome);
-                cout << "Digite o novo nome: ";
-                getline(cin, novoNome);
-                cout << "Digite a nova nacionalidade: ";
-                getline(cin, novaNacio);
-                cout << "Digite a nova avaliaçãoo: ";
-                getline(cin, novaAvaliacao);
-                cout << "Digite o novo ano de lancamento: ";
-                cin >> novoAno;
-                cin.ignore();
-                AnoL anoAlterado(novoAno);
-                crud.Alterar(nome, novoNome, novaNacio, novaAvaliacao, anoAlterado);
-                break;
+            case 4: {
+               cout << "Digite o nome do filme que deseja alterar: ";
+               getline(cin, nome);
+               crud.Alterar(nome);
+               break;
             }
 
             case 5:

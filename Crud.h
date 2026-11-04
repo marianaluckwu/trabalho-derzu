@@ -127,21 +127,61 @@ class Crud{
         }
     }
 
-    void Alterar(string nome, string novoNome, string novaNacio,
-                 string novaAvaliacao, AnoL novoAno){
-        int i = Pesquisar(nome);
-
-        if(i != -1){
-            filmes[i]->setNome(novoNome);
-            filmes[i]->setNacionalidade(novaNacio);
-            filmes[i]->setAvaliacao(novaAvaliacao);
-            filmes[i]->setAno(novoAno);
-        }
-        else{
-            cout << "Filme não encontrado" << endl;
-        }
+   void Alterar(string nome) {
+    int i = Pesquisar(nome);
+    if (i == -1) {
+        cout << "Filme não encontrado" << endl;
+        return;
     }
 
+    string novoNome;
+    string novaAvaliacao;
+    string novaNacio;
+    int novoAno;
+
+    cout << "\nDigite o novo nome: ";
+    getline(cin, novoNome);
+    cout << "Digite a nova avaliacao: ";
+    getline(cin, novaAvaliacao);
+    cout << "Digite a nova nacionalidade: ";
+    getline(cin, novaNacio);
+    cout << "Digite o novo ano de lancamento: ";
+    cin >> novoAno;
+    cin.ignore();
+
+    AnoL anoAlterado(novoAno);
+    
+    filmes[i]->setNome(novoNome);
+    filmes[i]->setAvaliacao(novaAvaliacao);
+    filmes[i]->setNacionalidade(novaNacio);
+    filmes[i]->setAno(anoAlterado);
+
+    Comedia* c = dynamic_cast<Comedia*>(filmes[i]);
+
+    if (c != nullptr) {
+        string novoEstilo;
+        cout << "Digite o novo estilo de humor: ";
+        getline(cin, novoEstilo);
+        c->setEstiloHumor(novoEstilo);
+    }
+    Acao* a = dynamic_cast<Acao*>(filmes[i]);
+    if (a != nullptr) {
+        string novoNivel;
+        cout << "Digite o novo nivel de acao: ";
+        getline(cin, novoNivel);
+        a->setNivelAcao(novoNivel);
+    }
+
+    Romance* r = dynamic_cast<Romance*>(filmes[i]);
+    if (r != nullptr) {
+        int novoFinal;
+        cout << "O filme tem final feliz? (1-Sim / 0-Nao): ";
+        cin >> novoFinal;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        r->setFinalFeliz(novoFinal);
+    }
+    cout << "\nFilme alterado com sucesso!" << endl;
+   }
     void Remover(string nome){
         int ind = Pesquisar(nome);
 
@@ -245,7 +285,7 @@ class Crud{
     arquivo.close();
     cout << "Os dados foram salvos" << endl;
     }
-    
+
     void CarregarArquivo() {
     ifstream arquivo("dados_filmes.txt");
     if (!arquivo.is_open()) {
