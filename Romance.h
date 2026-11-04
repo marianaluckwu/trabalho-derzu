@@ -12,7 +12,7 @@ private:
 public:
     Romance( bool final, string n, string a, string c, AnoL l)
         : Filme(n, a, c, l) {
-         finalfeliz = final;
+         finalFeliz = final;
     }
 
     bool getFinalFeliz() {
