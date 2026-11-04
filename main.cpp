@@ -38,18 +38,18 @@ int main(){
             case 1:{
                 cout << "Nome do filme: ";
                 getline(cin, n);
-                cout << "Avaliação: ";
+                cout << "Avaliacao: ";
                 getline(cin, a);
                 cout << "Nacionalidade: ";
                 getline(cin, c);
-                cout << "Ano de lançamento: ";
+                cout << "Ano de lancamento: ";
                 cin >> ano;
                 cin.ignore();
                 AnoL lancamento(ano);
 
-                cout << "Escolha o gênero:" << endl;
-                cout << "1. Comédia" << endl;
-                cout << "2. Ação" << endl;
+                cout << "Escolha o genero:" << endl;
+                cout << "1. Comedia" << endl;
+                cout << "2. Acao" << endl;
                 cout << "3. Romance" << endl;
                 cin >> genero;
                 cin.ignore();
@@ -63,7 +63,7 @@ int main(){
                         break;
 
                     case 2:
-                        cout << "Nível de ação: ";
+                        cout << "Nivel de acao: ";
                         getline(cin, nivel);
                         crud.InserirAcao(n, a, c, lancamento, nivel);
                         break;
@@ -76,7 +76,7 @@ int main(){
                         break;
 
                     default:
-                        cout << "Gênero inválido." << endl;
+                        cout << "Genero invalido." << endl;
                         break;
                 }
                 break;
@@ -115,7 +115,7 @@ int main(){
                 return 0;
 
             default:
-                cout << "Opção inválida" << endl;
+                cout << "Opção invalida" << endl;
                 break;
         }
     }
