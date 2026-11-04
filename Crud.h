@@ -1,4 +1,6 @@
 
+
+
 #pragma once
 #include <cctype>
 #include <fstream>
@@ -81,7 +83,7 @@ public:
         }
 
         for (int i = 0; i < qtd; i++) {
-            cout << "Índice: " << i << endl;
+            cout << "Indice: " << i << endl;
             cout << "Nome: " << filmes[i]->getNome() << endl;
             cout << endl;
         }
@@ -97,9 +99,9 @@ public:
             string nomeFilme = paraMinusculo(filmes[i]->getNome());
 
             if (nomeFilme.find(nomePesquisa) == 0) {
-                cout << "Índice: " << i << endl;
+                cout << "Indice: " << i << endl;
                 filmes[i]->exibirInformacoes();
-                cout << "Gênero: " << filmes[i]->getGenero() << endl;
+                cout << "Genero: " << filmes[i]->getGenero() << endl;
                 cout << endl;
 
                 count++;
@@ -115,7 +117,7 @@ public:
             return ind;
         }
 
-        cout << "Digite o índice do filme desejado: " << endl;
+        cout << "Digite o indice do filme desejado: " << endl;
         cin >> ind;
         cin.ignore();
 
@@ -138,7 +140,7 @@ public:
             cout << "Genero: " << filmes[i]->getGenero() << endl;
         }
         else {
-            cout << "Filme não encontrado" << endl;
+            cout << "Filme nao encontrado" << endl;
         }
     }
 
@@ -146,7 +148,7 @@ public:
         int i = Pesquisar(nome);
 
         if (i == -1) {
-            cout << "Filme não encontrado" << endl;
+            cout << "Filme nao encontrado" << endl;
             return;
         }
 
@@ -230,7 +232,7 @@ public:
             qtd--;
         }
         else {
-            cout << "Filme não encontrado" << endl;
+            cout << "Filme nao encontrado" << endl;
         }
     }
 
@@ -368,7 +370,7 @@ public:
                 InserirRomance(nome, avaliacao, nacionalidade, lancamento, finalFeliz);
             }
             else {
-                cout << "Gênero não encontrado " << tipo << endl;
+                cout << "Genero nao encontrado " << tipo << endl;
                 break;
             }
         }
@@ -385,3 +387,5 @@ public:
         delete[] filmes;
     }
 };
+
+
