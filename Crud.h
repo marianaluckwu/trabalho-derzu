@@ -1,4 +1,6 @@
 #pragma once
+#include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <limits>
@@ -200,6 +202,120 @@ class Crud{
     cout << "Total de filmes de acao: " << acao << endl;
    } 
 
+   void SalvarArquivo() {
+    ofstream arquivo("dados_filmes.txt");
+
+    if (!arquivo.is_open()) {
+        cout << "Erro ao abrir o arquivo para salvar" << endl;
+        return;
+    }
+    for (int i = 0; i < qtd; i++) {
+        if (dynamic_cast<Comedia*>(filmes[i]) != nullptr) {
+            Comedia* c = dynamic_cast<Comedia*>(filmes[i]);
+            arquivo << "COMEDIA "
+                    << quoted(filmes[i]->getNome()) << " "
+                    << quoted(filmes[i]->getAvaliacao()) << " "
+                    << quoted(filmes[i]->getNacionalidade()) << " "
+                    << filmes[i]->getAno().getAno() << " "
+                    << quoted(c->getEstiloHumor())
+                    << endl;
+        }
+        else if (dynamic_cast<Acao*>(filmes[i]) != nullptr) {
+            Acao* a = dynamic_cast<Acao*>(filmes[i]);
+            arquivo << "ACAO "
+                    << quoted(filmes[i]->getNome()) << " "
+                    << quoted(filmes[i]->getAvaliacao()) << " "
+                    << quoted(filmes[i]->getNacionalidade()) << " "
+                    << filmes[i]->getAno().getAno() << " "
+                    << quoted(a->getNivelAcao())
+                    << endl;
+        }
+        else if (dynamic_cast<Romance*>(filmes[i]) != nullptr) {
+            Romance* r = dynamic_cast<Romance*>(filmes[i]);
+            arquivo << "ROMANCE "
+                    << quoted(filmes[i]->getNome()) << " "
+                    << quoted(filmes[i]->getAvaliacao()) << " "
+                    << quoted(filmes[i]->getNacionalidade()) << " "
+                    << filmes[i]->getAno().getAno() << " "
+                    << r->getFinalFeliz()
+                    << endl;
+            }
+        }
+
+    arquivo.close();
+    cout << "Os dados foram salvos" << endl;
+    }
+    
+    void CarregarArquivo() {
+    ifstream arquivo("dados_filmes.txt");
+    if (!arquivo.is_open()) {
+        return;
+    }
+    string tipo;
+    string nome;
+    string avaliacao;
+    string nacionalidade;
+    int ano;
+
+    while (arquivo >> tipo) {
+        arquivo >> quoted(nome) >> quoted(avaliacao) >> quoted(nacionalidade) >> ano;
+        if (!arquivo) {
+            cout << "Erro ao ler os dados do arquivo" << endl;
+            break;
+        }
+        AnoL lancamento(ano);
+        if (tipo == "COMEDIA") {
+            string estilo;
+            arquivo >> quoted(estilo);
+            if (!arquivo) {
+                break;
+            }
+            InserirComedia(
+                nome,
+                avaliacao,
+                nacionalidade,
+                lancamento,
+                estilo
+            );
+        }
+        else if (tipo == "ACAO") {
+            string nivel;
+            arquivo >> quoted(nivel);
+            if (!arquivo) {
+                break;
+            }
+            InserirAcao(
+                nome,
+                avaliacao,
+                nacionalidade,
+                lancamento,
+                nivel
+            );
+        }
+        else if (tipo == "ROMANCE") {
+            bool finalFeliz;
+            arquivo >> finalFeliz;
+            if (!arquivo) {
+                break;
+            }
+            InserirRomance(
+                nome,
+                avaliacao,
+                nacionalidade,
+                lancamento,
+                finalFeliz
+            );
+        }
+        else {
+            cout << "Gênero não encontrado" << tipo << endl;
+            break;
+        }
+    }
+    arquivo.close();
+    cout << "Dados carregados: " << qtd << " filmes" << endl;
+    }
+
+  
     ~Crud(){
         for(int i=0; i<qtd; i++){
             delete filmes[i];
