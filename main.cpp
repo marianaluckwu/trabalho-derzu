@@ -19,9 +19,12 @@ int main(){
     string estilo, nivel;
     string nome;
     Crud crud;
+    
     crud.CarregarArquivo();
 
+    cout << "========CineAvaliacao========" << endl;
     while(1){
+        
         cout << "\nEscolha as seguintes opcoes:" << endl;
         cout << "1. Inserir" << endl;
         cout << "2. Listar todos" << endl;
