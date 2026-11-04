@@ -115,7 +115,7 @@ int main(){
                 return 0;
 
             default:
-                cout << "Opção invalida" << endl;
+                cout << "Opcao invalida" << endl;
                 break;
         }
     }
