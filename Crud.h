@@ -1,4 +1,5 @@
 #pragma once
+#include <cctype>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -79,41 +80,48 @@ class Crud{
 }
 
     int Pesquisar(string nome){
-        int count = 0;
-        int ind = -1;
+    int count = 0;
+    int ind = -1;
 
-        for(int i=0; i<qtd; i++){
-            if(filmes[i]->getNome().find(nome) == 0){
-                cout << "Índice: " << i << endl;
-                filmes[i]->exibirInformacoes();
-                cout << "Gênero: " << filmes[i]->getGenero() << endl;
-                cout << endl;
+    string nomePesquisa = paraMinusculo(nome);
 
-                count++;
-                ind = i;
-            }
+    for(int i = 0; i < qtd; i++){
+
+        string nomeFilme = paraMinusculo(filmes[i]->getNome());
+
+        if(nomeFilme.find(nomePesquisa) == 0){
+            cout << "Índice: " << i << endl;
+            filmes[i]->exibirInformacoes();
+            cout << "Gênero: " << filmes[i]->getGenero() << endl;
+            cout << endl;
+
+            count++;
+            ind = i;
         }
+    }
 
-        if(count == 0){
-            return -1;
-        }
-
-        if(count == 1){
-            return ind;
-        }
-
-        cout << "Digite o índice do filme desejado: " << endl;
-        cin >> ind;
-        cin.ignore();
-
-        for(int i=0; i<qtd; i++){
-            if(i == ind && filmes[i]->getNome().find(nome) == 0){
-                return ind;
-            }
-        }
-
+    if(count == 0){
         return -1;
     }
+
+    if(count == 1){
+        return ind;
+    }
+
+    cout << "Digite o índice do filme desejado: " << endl;
+    cin >> ind;
+    cin.ignore();
+
+    for(int i = 0; i < qtd; i++){
+        string nomeFilme = paraMinusculo(filmes[i]->getNome());
+
+        if(i == ind && nomeFilme.find(nomePesquisa) == 0){
+            return ind;
+        }
+    }
+
+    return -1;
+}
 
     void ExibirUm(string nome){
         int i = Pesquisar(nome);
