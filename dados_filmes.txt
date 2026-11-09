@@ -1,1 +1,4 @@
 ACAO "Jogos Vorazes" "10" "americana" 2012 "moderado"
+ROMANCE "Verity e o marido" "final questionavel" "estadunidense" 2025 0
+COMEDIA "Gente Grande" "10" "estadunidense" 2010 "pastelao"
+ACAO "Verdade Intensa" "muito bom" "brasileira" 2020 "grande"
